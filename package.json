@@ -1,0 +1,14 @@
+{
+  "name": "sigl-home-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "richardsigl.com landing page",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel",
+    "deploy": "vercel deploy --prod"
+  },
+  "dependencies": {
+    "resend": "^4.0.0"
+  }
+}

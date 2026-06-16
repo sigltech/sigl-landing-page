@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Richard Sigl — Software Engineering</title>
+<meta name="description" content="Richard Sigl — software engineer. Building web applications, APIs, and product platforms." />
+<meta name="theme-color" content="#fbf8f3" />
+<meta property="og:title" content="Richard Sigl — Software Engineering" />
+<meta property="og:description" content="Software engineer building web applications, APIs, and product platforms." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://richardsigl.com" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111111'/%3E%3Ctext x='50%25' y='62%25' text-anchor='middle' font-family='Georgia,serif' font-size='18' font-style='italic' font-weight='700' fill='%23d2461f'%3ERS%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fbf8f3;
+    --bg-2: #ffffff;
+    --bg-3: #f5f0e6;
+    --ink: #111111;
+    --ink-2: #2a2a2a;
+    --muted: #6b6b6b;
+    --faint: #a0998c;
+    --border: #e8e1d2;
+    --border-2: #d8d0bd;
+    --accent: #c2410c;
+    --accent-2: #9a2c00;
+    --accent-soft: #fde6d3;
+    --shadow: 0 1px 2px rgba(20,20,20,0.04), 0 8px 24px rgba(20,20,20,0.06);
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+  img { max-width: 100%; display: block; }
+
+  a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 120ms ease;
+  }
+  a:hover { color: var(--accent); }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+  .container-narrow {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ── Nav ── */
+  nav.site {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(251, 248, 243, 0.85);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms ease;
+  }
+  nav.site.scrolled { border-bottom-color: var(--border); }
+  nav.site .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  nav.site .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  nav.site .brand .mark {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: var(--ink);
+    color: var(--accent);
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+  nav.site ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  nav.site ul a {
+    color: var(--ink-2);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  nav.site ul a:hover { color: var(--accent); }
+  nav.site .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 120ms ease, transform 80ms ease;
+  }
+  nav.site .cta:hover { background: var(--accent); color: #fff; }
+  nav.site .cta:active { transform: translateY(1px); }
+  @media (max-width: 640px) {
+    nav.site ul li.hide-sm { display: none; }
+  }
+
+  /* ── Hero ── */
+  section.hero {
+    padding: 96px 0 80px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 28px;
+  }
+  .eyebrow .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(194,65,12,0.18);
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(40px, 6.5vw, 76px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin: 0 0 28px 0;
+    color: var(--ink);
+    max-width: 16ch;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .hero p.lede {
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 60ch;
+    margin: 0 0 36px 0;
+  }
+  .hero .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 120ms ease, color 120ms ease, border-color 120ms ease, transform 80ms ease;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .btn-primary:hover { background: var(--accent); color: #fff; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--border-2);
+  }
+  .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+  .btn:active { transform: translateY(1px); }
+  .btn .arrow {
+    transition: transform 160ms ease;
+  }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* ── Section header ── */
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+  }
+  .section-head .label {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px 0;
+  }
+  .section-head h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(28px, 3.4vw, 38px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 0;
+    max-width: 22ch;
+  }
+  .section-head h2 em { font-style: italic; font-weight: 400; }
+  .section-head .meta {
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  section { padding: 88px 0; }
+  section.alt { background: var(--bg-3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  /* ── Services ── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .service {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  }
+  .service:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    border-color: var(--border-2);
+  }
+  .service .num {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--accent);
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  .service h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px 0;
+  }
+  .service p {
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  @media (max-width: 860px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Work ── */
+  .work-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .work-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 28px;
+    padding: 28px 4px;
+    border-top: 1px solid var(--border);
+    transition: padding 200ms ease;
+  }
+  .work-item:last-child { border-bottom: 1px solid var(--border); }
+  .work-item:hover { padding-left: 14px; padding-right: 14px; background: var(--bg-2); }
+  .work-item a.row {
+    display: contents;
+    color: inherit;
+  }
+  .work-item .index {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .work-item .body h3 {
+    font-family: var(--serif);
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin: 0 0 6px 0;
+    transition: color 160ms ease;
+  }
+  .work-item:hover .body h3 { color: var(--accent); }
+  .work-item .body p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 14.5px;
+  }
+  .work-item .body .tags {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--ink-2);
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.01em;
+  }
+  .work-item .visit {
+    font-size: 13px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .work-item:hover .visit { color: var(--accent); }
+  .work-item .visit svg { width: 14px; height: 14px; }
+  @media (max-width: 720px) {
+    .work-item { grid-template-columns: 36px 1fr; }
+    .work-item .visit { grid-column: 1 / -1; padding-left: 64px; }
+  }
+
+  /* ── About ── */
+  section.about .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 60px;
+    align-items: start;
+  }
+  section.about .bio p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0 0 16px 0;
+  }
+  section.about .bio p:last-child { margin-bottom: 0; }
+  section.about .stack {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  section.about .stack h4 {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 14px 0;
+  }
+  section.about .stack ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  section.about .stack ul:last-child { margin-bottom: 0; }
+  @media (max-width: 860px) {
+    section.about .grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* ── Contact ── */
+  section.contact {
+    background: var(--ink);
+    color: var(--bg);
+    border-top: none;
+    border-bottom: none;
+  }
+  section.contact .section-head { border-bottom-color: rgba(255,255,255,0.1); }
+  section.contact .section-head .label { color: #f59e6b; }
+  section.contact .section-head h2 { color: var(--bg); }
+  section.contact .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 60px;
+    align-items: start;
+  }
+  section.contact .intro p {
+    color: rgba(251,248,243,0.78);
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 0 0 28px 0;
+  }
+  .socials {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .socials a {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(251,248,243,0.85);
+    font-size: 15px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+    transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+  }
+  .socials a:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.18);
+    color: #fff;
+  }
+  .socials svg { width: 18px; height: 18px; opacity: 0.9; }
+  .socials .handle { color: rgba(251,248,243,0.55); font-size: 13.5px; margin-left: auto; }
+
+  form.contact-form {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  form.contact-form .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  form.contact-form label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(251,248,243,0.65);
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  form.contact-form .field { margin-bottom: 16px; }
+  form.contact-form input,
+  form.contact-form textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--bg);
+    font-family: inherit;
+    font-size: 15px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    resize: vertical;
+    transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+  }
+  form.contact-form input::placeholder,
+  form.contact-form textarea::placeholder { color: rgba(251,248,243,0.35); }
+  form.contact-form input:focus,
+  form.contact-form textarea:focus {
+    outline: none;
+    background: rgba(255,255,255,0.06);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(194,65,12,0.18);
+  }
+  form.contact-form textarea { min-height: 140px; }
+  form.contact-form .hp {
+    position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;
+  }
+  form.contact-form .actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  form.contact-form button {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 22px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 120ms ease, transform 80ms ease;
+  }
+  form.contact-form button:hover { background: var(--accent-2); border-color: var(--accent-2); }
+  form.contact-form button:active { transform: translateY(1px); }
+  form.contact-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+  form.contact-form .status {
+    font-size: 13.5px;
+    color: rgba(251,248,243,0.7);
+    min-height: 18px;
+  }
+  form.contact-form .status.ok { color: #86efac; }
+  form.contact-form .status.err { color: #fca5a5; }
+
+  @media (max-width: 860px) {
+    section.contact .grid { grid-template-columns: 1fr; gap: 40px; }
+    form.contact-form .row { grid-template-columns: 1fr; }
+  }
+
+  /* ── Footer ── */
+  footer.site {
+    padding: 36px 0;
+    background: var(--ink);
+    color: rgba(251,248,243,0.55);
+    font-size: 13px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  footer.site .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  footer.site a { color: rgba(251,248,243,0.7); }
+  footer.site a:hover { color: #fff; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site" id="nav">
+  <div class="container inner">
+    <a href="#top" class="brand">
+      <span class="mark">R</span>
+      <span>Richard Sigl</span>
+    </a>
+    <ul>
+      <li class="hide-sm"><a href="#work">Work</a></li>
+      <li class="hide-sm"><a href="#about">About</a></li>
+      <li><a href="#contact" class="cta">Contact <span aria-hidden="true">→</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<a id="top"></a>
+
+<section class="hero">
+  <div class="container-narrow">
+    <span class="eyebrow"><span class="dot"></span> Software Engineer · Independent</span>
+    <h1>Building thoughtful <em>software</em> for the modern web.</h1>
+    <p class="lede">
+      I’m Richard — a software engineer who designs and ships web applications,
+      APIs, and product platforms. Working independently on a handful of focused projects.
+    </p>
+    <div class="actions">
+      <a href="#work" class="btn btn-primary">See selected work <span class="arrow">→</span></a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="label">What I do</p>
+        <h2>End-to-end engineering, from <em>idea</em> to production.</h2>
+      </div>
+      <span class="meta">Practice areas</span>
+    </div>
+    <div class="services-grid">
+      <div class="service">
+        <div class="num">01</div>
+        <h3>Web Applications</h3>
+        <p>Modern, full-stack applications built with TypeScript and React. From quick MVPs to long-lived products with real users.</p>
+      </div>
+      <div class="service">
+        <div class="num">02</div>
+        <h3>APIs &amp; Backends</h3>
+        <p>Clean, well-modelled APIs and data layers. Pragmatic architecture that ages well without over-engineering.</p>
+      </div>
+      <div class="service">
+        <div class="num">03</div>
+        <h3>Product Engineering</h3>
+        <p>End-to-end ownership of features and small products — design, build, ship, measure, iterate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="label">Selected work</p>
+        <h2>Things I’m building right now.</h2>
+      </div>
+      <span class="meta">2 projects</span>
+    </div>
+    <div class="work-list">
+      <div class="work-item">
+        <a class="row" href="https://touch-rugby-hub.richardsigl.com/" target="_blank" rel="noopener">
+          <span class="index">01</span>
+          <div class="body">
+            <h3>Touch Rugby Hub</h3>
+            <p>A home on the web for the touch rugby community — fixtures, teams, and tools for players and organisers.</p>
+            <div class="tags">
+              <span class="tag">Web App</span>
+              <span class="tag">Community</span>
+              <span class="tag">Sport</span>
+            </div>
+          </div>
+          <span class="visit">
+            Visit
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </span>
+        </a>
+      </div>
+      <div class="work-item">
+        <a class="row" href="https://portfolio.richardsigl.com" target="_blank" rel="noopener">
+          <span class="index">02</span>
+          <div class="body">
+            <h3>Portfolio</h3>
+            <p>A longer-form look at selected projects, writing, and experiments — the story behind the work.</p>
+            <div class="tags">
+              <span class="tag">Showcase</span>
+              <span class="tag">Writing</span>
+            </div>
+          </div>
+          <span class="visit">
+            Visit
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="label">About</p>
+        <h2>A short <em>introduction.</em></h2>
+      </div>
+      <span class="meta">Profile</span>
+    </div>
+    <div class="grid">
+      <div class="bio">
+        <p>I’m a software engineer based on the web. I’ve spent the last several years shipping product across the stack — design systems, application frontends, APIs, and the infrastructure that runs them.</p>
+        <p>Outside of paid work, I keep a small portfolio of personal projects. They’re where I sharpen tools, try out ideas, and stay close to the craft.</p>
+      </div>
+      <aside class="stack">
+        <h4>Languages</h4>
+        <ul>
+          <li class="tag">TypeScript</li>
+          <li class="tag">JavaScript</li>
+          <li class="tag">Python</li>
+          <li class="tag">SQL</li>
+        </ul>
+        <h4>Frameworks &amp; Tools</h4>
+        <ul>
+          <li class="tag">React</li>
+          <li class="tag">Next.js</li>
+          <li class="tag">Node.js</li>
+          <li class="tag">Postgres</li>
+          <li class="tag">Vercel</li>
+        </ul>
+        <h4>Currently exploring</h4>
+        <ul>
+          <li class="tag">LLM tooling</li>
+          <li class="tag">Edge runtimes</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="label">Contact</p>
+        <h2>Got something to <em>talk about?</em></h2>
+      </div>
+      <span class="meta">Response within a few days</span>
+    </div>
+    <div class="grid">
+      <div class="intro">
+        <p>I’m not actively looking for work, but I’m happy to hear from people building interesting things — collaborations, questions, or just a friendly hello.</p>
+        <div class="socials">
+          <a href="https://github.com/sigltech" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.69-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.77.11 3.06.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z"/></svg>
+            GitHub
+            <span class="handle">@sigltech</span>
+          </a>
+          <a href="https://www.linkedin.com/in/richardsigl/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.56c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46C23.21 24 24 23.23 24 22.28V1.72C24 .77 23.21 0 22.23 0Z"/></svg>
+            LinkedIn
+            <span class="handle">/in/richardsigl</span>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="row">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required maxlength="120" placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required maxlength="200" placeholder="you@domain.com" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required maxlength="5000" placeholder="What’s on your mind?"></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <div class="actions">
+          <button type="submit" id="submit-btn">Send message <span aria-hidden="true">→</span></button>
+          <span class="status" id="form-status" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container inner">
+    <span>© <span id="year"></span> Richard Sigl</span>
+    <span>Made with care — <a href="#top">back to top ↑</a></span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 8) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const btn = document.getElementById('submit-btn');
+
+  function setStatus(msg, kind) {
+    status.textContent = msg;
+    status.className = 'status' + (kind ? ' ' + kind : '');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setStatus('Sending…');
+    btn.disabled = true;
+    const data = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      message: form.message.value.trim(),
+      company: form.company.value,
+    };
+    if (!data.name || !data.email || !data.message) {
+      setStatus('Please fill out all fields.', 'err');
+      btn.disabled = false;
+      return;
+    }
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (res.ok) {
+        setStatus('Message sent — I’ll reply soon. Thanks!', 'ok');
+        form.reset();
+      } else {
+        setStatus(json.error || 'Something went wrong. Try again?', 'err');
+      }
+    } catch (err) {
+      setStatus('Network error. Try again?', 'err');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
